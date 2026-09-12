@@ -6,9 +6,8 @@
 
 ### Team Members
 
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Abhishek B - [College]
+- Member 2: Vinayak Premil - [College]
 
 ### Project Description
 
