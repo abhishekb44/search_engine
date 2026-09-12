@@ -1,58 +1,58 @@
 # IDK.exe
 
-IDK.exe is a parody search engine that answers everyday questions with one
-short, confident, and intentionally useless result. Choose a personality,
-ask anything, and get a funny answer tailored to the exact query.
+## Basic Details
 
-The app works in two layers:
+### Team Name: [Add team name]
 
-- A React and Vite frontend for searching, personality selection, loading
-  states, and result display.
-- An Express backend that generates answers with Google Gemini or Anthropic
-  Claude. When the backend is unavailable or no API key is configured, the
-  frontend uses its built-in semantic fallback engine.
+### Team Members
 
-## Features
+- Team Lead: [Name] - [College]
+- Member 2: [Name] - [College]
+- Member 3: [Name] - [College]
 
-- Query-aware parody answers generated on demand
-- Simple, savage, Gen-Z, professor, mystic, and corporate personalities
-- Gemini-first AI generation with optional Anthropic support
-- Offline semantic fallback with no API key required
-- JSON response validation and query length protection
-- Per-IP rate limiting of 30 requests per minute
+### Project Description
 
-## Tech stack
+IDK.exe is a parody search engine that gives one short, confident, and
+intentionally useless answer to any question. Users can choose a personality
+and receive a funny response tailored to their exact query.
 
-- React 19
-- Vite
-- Express
-- Google Gemini via `@google/genai`
-- Optional Anthropic Claude via `@anthropic-ai/sdk`
+The React frontend connects to an Express AI backend for live answers and
+falls back to a built-in semantic answer engine when the backend or an API key
+is unavailable.
 
-## Project structure
+### The Problem (that doesn't exist)
 
-```text
-.
-├── src/                       # React frontend
-│   ├── components/            # Search bar, result card, and loader
-│   ├── lib/fallbackResults.js # Offline query-aware answer engine
-│   ├── App.jsx
-│   └── main.jsx
-├── server/                    # Express AI backend
-│   ├── lib/promptEngine.js    # Prompt construction and response parsing
-│   ├── index.js               # API routes and provider selection
-│   └── .env.example
-├── index.html
-└── vite.config.js             # Development proxy for /api
-```
+People are forced to search the internet for serious answers when what they
+really need is a completely unhelpful answer delivered with absolute
+confidence.
 
-## Requirements
+### The Solution (that nobody asked for)
 
-- Node.js 18 or newer
-- npm
-- A Google Gemini API key for live AI results (optional)
+IDK.exe replaces useful search results with one hilarious parody result. It
+uses AI prompts, selectable personalities, and an offline fallback engine to
+make sure every question receives an answer, even when nobody asked for one.
 
-## Getting started
+## Technical Details
+
+### Technologies/Components Used
+
+For Software:
+
+- Languages: JavaScript, HTML, and CSS
+- Frameworks: React 19, Vite, and Express
+- Libraries: `@google/genai`, `@anthropic-ai/sdk`, `cors`, and `dotenv`
+- Tools: npm, ESLint, and the Vite development proxy
+
+For Hardware:
+
+- No special hardware is required.
+- Any computer capable of running Node.js 18 or newer can run the project.
+
+### Implementation
+
+For Software:
+
+# Installation
 
 Install the frontend and backend dependencies:
 
@@ -66,8 +66,11 @@ Create the backend environment file:
 cp server/.env.example server/.env
 ```
 
-Set `GEMINI_API_KEY` in `server/.env` to enable Gemini. You can optionally
-set `ANTHROPIC_API_KEY`; Anthropic is used when Gemini is not configured.
+Set `GEMINI_API_KEY` in `server/.env` for live Gemini answers. You can
+optionally set `ANTHROPIC_API_KEY` to use Claude when Gemini is unavailable.
+No API key is required for the built-in fallback engine.
+
+# Run
 
 Start the frontend and backend together:
 
@@ -75,61 +78,75 @@ Start the frontend and backend together:
 npm run dev:all
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser. To run
-the services separately, use `npm run dev` for Vite and `npm run server` for
-the API at [http://localhost:3001](http://localhost:3001).
-
-## Environment variables
-
-| Variable | Required | Default | Description |
-| --- | --- | --- | --- |
-| `GEMINI_API_KEY` | No | - | Google Gemini API key |
-| `GEMINI_MODEL` | No | `gemini-3.6-flash` | Gemini model name |
-| `ANTHROPIC_API_KEY` | No | - | Optional Claude API key |
-| `ANTHROPIC_MODEL` | No | `claude-3-5-haiku-20241022` | Claude model name |
-| `PORT` | No | `3001` | Backend port |
-
-Never commit `server/.env` or any API keys. The repository ignores local
-environment files and includes `server/.env.example` as a safe template.
-
-## API
-
-### `POST /api/search`
-
-Request body:
-
-```json
-{
-  "query": "Why is my code broken?",
-  "personality": "savage"
-}
-```
-
-The query must be a non-empty string of at most 200 characters. The response
-contains one generated result, its provider, or a fallback instruction when
-no AI provider is available.
-
-### `GET /api/health`
-
-Returns the backend status, active provider, and configured model.
-
-## Available scripts
+Open `http://localhost:5173` in a browser. To run the services separately:
 
 ```bash
-npm run dev       # Start the Vite development server
-npm run server    # Start the backend in watch mode
-npm run dev:all   # Start frontend and backend together
-npm run build     # Build the frontend for production
-npm run preview   # Preview the production frontend build
-npm run lint      # Run ESLint
+npm run dev      # Frontend on http://localhost:5173
+npm run server   # Backend on http://localhost:3001
 ```
 
-To run the backend in production mode:
+## Project Documentation
 
-```bash
-npm run start --prefix server
+For Software:
+
+### Screenshots
+
+> Add at least three screenshots of the running application to the repository
+> and replace the placeholders below with their paths.
+
+![Screenshot 1](screenshots/search-page.png)
+*The search page with the query field and personality selector.*
+
+![Screenshot 2](screenshots/result-card.png)
+*The generated parody result and its humorous verdict.*
+
+![Screenshot 3](screenshots/fallback-result.png)
+*The offline semantic fallback response when no AI provider is available.*
+
+### Diagrams
+
+```mermaid
+flowchart TD
+    User[User enters a question] --> Frontend[React and Vite frontend]
+    Frontend --> API[POST /api/search]
+    API --> Provider{AI provider configured?}
+    Provider -->|Gemini key| Gemini[Google Gemini]
+    Provider -->|No Gemini, Claude key| Claude[Anthropic Claude]
+    Provider -->|No API key or API error| Fallback[Semantic fallback engine]
+    Gemini --> Parser[Validate and parse one result]
+    Claude --> Parser
+    Parser --> Frontend
+    Fallback --> Frontend
 ```
+*The application flow from a user query to an AI-generated or offline result.*
 
-The Vite development server proxies `/api` requests to `http://localhost:3001`.
-For deployment, serve the frontend and backend behind the same origin or
-replace that proxy with the URL of the deployed API.
+For Hardware:
+
+No hardware schematic, circuit, or build photos are applicable to this
+software project.
+
+### Project Demo
+
+# Video
+
+[Add your demo video link here]
+
+*The demo should show the query flow, personality selection, generated result,
+and offline fallback behavior.*
+
+# Additional Demos
+
+[Add any extra demo materials or links here]
+
+## Team Contributions
+
+- [Team Lead]: Frontend structure, search interface, and application styling
+- [Member 2]: Backend API, AI provider integration, and prompt handling
+- [Member 3]: Offline fallback engine, testing, documentation, and demo
+
+---
+
+Made with love at TinkerHub Useless Projects
+
+![TinkerHub badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
+![Useless Projects badge](https://img.shields.io/badge/UselessProjects--26-26?link=https%3A%2F%2Ftinkerhub.org%2Fevents%2F1M8ORET9A1%2Fuseless-projects-3.0)
